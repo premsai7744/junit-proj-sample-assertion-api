@@ -1,6 +1,11 @@
 package com.premit.test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.Connection;
 
@@ -13,7 +18,8 @@ import com.premit.demo.DbConnection;
 public class TestDbConnection {
 	
 	public DbConnection dbConnection = null;
-	public Connection con = null;
+	public Connection con1 = null;
+	public Connection con2 = null;
 	
 	@BeforeEach
 	public void setUp() {
@@ -22,8 +28,13 @@ public class TestDbConnection {
 	
 	@Test
 	public void testGetConnection() {
-		con = dbConnection.getConnection();
-		assertNotNull(con,"connection is null");
+		con1 = dbConnection.getConnection();
+		con2 = dbConnection.getConnection();
+		
+		if(con1==null || con2==null) {
+			fail("Connections are not created.");
+		}
+		
 	}
 	
 	@AfterEach
